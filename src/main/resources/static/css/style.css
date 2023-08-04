@@ -1,3 +1,16 @@
-body{
+body {
     background-color: #e2e2e2 !important;
+}
+
+.bg-nav {
+    background: #ffff00 !important;
+}
+
+.banner {
+    width: 100%;
+    height: 91vh;
+    background: linear-gradient(rgba(102, 102, 0, 0.80),
+    rgba(204, 204, 0, 0.80), rgba(255, 255, 20, 0.75)),
+    url("../img/bg-home.jpg");
+    background-size: contain;
 }
