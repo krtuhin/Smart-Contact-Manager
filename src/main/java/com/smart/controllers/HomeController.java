@@ -5,6 +5,7 @@ import com.smart.entities.User;
 import com.smart.helper.Message;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class HomeController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     //handler for home page
     @GetMapping("/")
@@ -80,6 +84,9 @@ public class HomeController {
             //setting value into user, that fields are not available in form
             user.setActive(true);
             user.setType("user_role");
+
+            //password encoding
+            user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
             //save user into database
             User result = this.userRepository.save(user);

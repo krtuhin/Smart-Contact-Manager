@@ -25,7 +25,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Size(min = 8, max = 20, message = "Invalid password..! (password must be between 8 to 20 characters)")
+    @NotBlank(message = "Password can't be empty..!")
+    //@Size(min = 8, max = 20, message = "Invalid password..! (password must be between 8 to 20 characters)")
     private String password;
 
     @Column(length = 500)
