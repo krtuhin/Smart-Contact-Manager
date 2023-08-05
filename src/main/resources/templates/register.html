@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Register Page</title>
+    </head>
+
+    <body>
+
+        <section class="my-3">
+
+            <div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+
+                            <div class="card">
+
+                                <!--card header-->
+                                <div class="card-header text-center">
+
+                                    <!--image-->
+                                    <div class="text-center">
+                                        <img th:src="@{/img/signup.png}" alt="SignUp" class="logo mb-2">
+                                    </div>
+
+                                    <!--title-->
+                                    <h5 class="card-title text-uppercase">register here</h5>
+
+                                    <!--show success or error message-->
+                                    <div th:if="${session.msg}" th:classappend="${session.msg.type}"
+                                         class="alert alert-dismissible fade show" role="alert">
+
+                                        <!--message content-->
+                                        <strong th:text="${session.msg.content}"></strong>
+
+                                        <!--remove message from session-->
+                                        <th:block th:text="${@sessionHelper.removeAttribute('msg')}"></th:block>
+
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <!--end show message-->
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <!--register form-->
+                                    <form th:action="@{/add-user}" method="post" th:object="${user}">
+
+                                        <!--name field-->
+                                        <div class="mb-2">
+
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" name="name" th:value="${user.name}"
+                                                   class="form-control" id="name" required
+                                                   placeholder="Enter name">
+
+                                        </div>
+
+                                        <!--email field-->
+                                        <div class="mb-2">
+
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" name="email" th:value="${user.email}"
+                                                   class="form-control" id="email" aria-describedby="emailHelp"
+                                                   required placeholder="Enter email here">
+
+                                        </div>
+
+                                        <!--password field-->
+                                        <div class="mb-2">
+
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" name="password"
+                                                   class="form-control" id="password"
+                                                   required placeholder="Enter password here">
+
+                                        </div>
+
+                                        <!--image field-->
+                                        <div class="mb-2">
+
+                                            <label for="image" class="form-label">Profile</label>
+                                            <input type="file" name="profile" class="form-control" id="image">
+
+                                        </div>
+
+                                        <!--about field-->
+                                        <div class="mb-2">
+
+                                            <label for="about" class="form-label">About</label>
+                                            <textarea name="about" th:text="${user.about}" id="about"
+                                                      class="form-control" rows="4"
+                                                      placeholder="Enter about you"></textarea>
+
+                                        </div>
+
+                                        <!--check box-->
+                                        <div class="mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="check" id="check">
+                                                <label class="form-check-label" for="check">
+                                                    Accept terms & conditions
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!--submit and reset button-->
+                                        <div class="text-center">
+                                            <button type="reset" class="btn btn-secondary text-white fw-medium">Reset
+                                            </button>
+                                            <button type="submit" class="btn btn-success text-white fw-medium">Submit
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </body>
+
+</html>

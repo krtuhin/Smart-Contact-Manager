@@ -14,3 +14,8 @@ body {
     url("../img/bg-home.jpg");
     background-size: contain;
 }
+
+.logo {
+    width: 60px;
+    height: auto;
+}
