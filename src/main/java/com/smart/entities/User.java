@@ -2,6 +2,10 @@ package com.smart.entities;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +16,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+
+    @NotBlank(message = "Name can't be empty..!")
     private String name;
 
+    @NotBlank(message = "Email can't be empty..!")
+    @Email(message = "Invalid email..!")
     @Column(unique = true)
     private String email;
+
+    @Size(min = 8, max = 20, message = "Invalid password..! (password must be between 8 to 20 characters)")
     private String password;
 
     @Column(length = 500)

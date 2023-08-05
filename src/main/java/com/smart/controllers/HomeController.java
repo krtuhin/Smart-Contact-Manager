@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -49,9 +52,21 @@ public class HomeController {
 
     //handler for saving user into database
     @PostMapping("/add-user")
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "check", defaultValue = "false") boolean check, Model model, HttpSession session) {
+    public String registerUser(
+            @Valid @ModelAttribute("user") User user, BindingResult bindingResult,
+            @RequestParam(value = "check", defaultValue = "false") boolean check,
+            Model model, HttpSession session) {
 
         try {
+
+            //form validation
+            if (bindingResult.hasErrors()) {
+
+                System.out.println(bindingResult);
+                model.addAttribute("user", user);
+
+                return "register";
+            }
 
             //validation for terms and conditions
             if (!check) {
@@ -81,8 +96,21 @@ public class HomeController {
 
             e.printStackTrace();
 
+            //default error message
+            String content = "Something went wrong..!!";
+
+            //error message based on conditions
+            if (e.toString().contains("unique constraint")) {
+
+                content = "Email already exist, try with another..!!";
+
+            } else if (e.toString().contains("terms & conditions")) {
+
+                content = "Please accept terms & conditions..!!";
+            }
+
             //sending error
-            session.setAttribute("msg", new Message("Something went wrong..!!", "alert-danger"));
+            session.setAttribute("msg", new Message(content, "alert-danger"));
 
             return "register";
         }
