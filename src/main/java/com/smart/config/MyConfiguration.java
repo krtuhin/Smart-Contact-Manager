@@ -53,10 +53,13 @@ public class MyConfiguration {
                 .requestMatchers("/**").permitAll());
 
         //custom login page
-        //httpSecurity.formLogin(form -> form.loginPage("/login"));
+        httpSecurity.formLogin(form -> form.loginPage("/login"));
 
         //default login page
-        httpSecurity.formLogin(Customizer.withDefaults());
+        //httpSecurity.formLogin(Customizer.withDefaults());
+
+        //csrf security disable
+        httpSecurity.csrf(csrf -> csrf.disable());
 
         //authentication provider
         httpSecurity.authenticationProvider(this.authenticationProvider());

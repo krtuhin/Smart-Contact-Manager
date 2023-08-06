@@ -123,4 +123,12 @@ public class HomeController {
         }
     }
 
+    //handler for login page
+    @GetMapping("/login")
+    public String login(Model model) {
+
+        model.addAttribute("title", "Sign In - Smart Contact Manager");
+
+        return "login";
+    }
 }
