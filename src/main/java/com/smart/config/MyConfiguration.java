@@ -53,7 +53,10 @@ public class MyConfiguration {
                 .requestMatchers("/**").permitAll());
 
         //custom login page
-        httpSecurity.formLogin(form -> form.loginPage("/login"));
+        httpSecurity.formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/success")
+                .defaultSuccessUrl("/user/index"));
 
         //default login page
         //httpSecurity.formLogin(Customizer.withDefaults());
