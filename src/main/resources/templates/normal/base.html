@@ -14,6 +14,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
               crossorigin="anonymous">
+
+        <!-- awesome icon -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -65,12 +69,48 @@
         </nav>
         <!--end navbar-->
 
-        <!--replace other page's data-->
-        <div th:replace="${content}"></div>
+        <!-- start sidebar  -->
+        <div class="sidebar">
+
+            <!-- cross button -->
+            <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
+
+            <!-- menu items -->
+            <a href="#" class="item"><span class="fa fa-home"></span> Home</a>
+
+            <a href="#" class="item"><span class="fa fa-address-book"></span> View Contacts</a>
+
+            <a href="#" class="item"><span class="fa fa-edit"></span> Add Contact</a>
+
+            <a href="#" class="item"><span class="	fa fa-user-circle-o"></span> Your Profile</a>
+
+            <a href="#" class="item"><span class="fa fa-gear"></span> Settings</a>
+
+            <a th:href="@{/logout}" class="item"><span class="fa fa-sign-out"></span> Logout</a>
+
+            <div class="divider"></div>
+
+        </div>
+        <!-- end sidebar -->
+
+        <!-- start content area -->
+        <div class="content">
+
+            <!-- 3 bar button -->
+            <i onclick="toggleSidebar()" class="fa fa-bars m-3 barBtn"></i>
+
+            <!--replace other page's data-->
+            <div th:replace="${content}"></div>
+
+        </div>
+        <!-- end content area -->
 
         <!--bootstrap js-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
                 crossorigin="anonymous"></script>
+
+        <!-- jQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </body>
 </html>
