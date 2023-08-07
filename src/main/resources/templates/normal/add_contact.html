@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section})}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Contact Page</title>
+    </head>
+    <body>
+
+        <section>
+
+            <div class="container my-3">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card py-2 px-5">
+                            <div class="card-body">
+
+                                <h4 class="text-center mb-3">Add Contact</h4>
+
+                                <!-- add contact form -->
+                                <form th:action="@{/user/add-contact}" th:object="${contact}" method="post"
+                                      enctype="multipart/form-data" novalidate>
+
+                                    <!-- 2 column grid layout with text inputs for the name and nickname -->
+                                    <div class="row mb-3">
+
+                                        <!-- name field -->
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                                <input type="text" name="name" th:value="${contact.name}"
+                                                       class="form-control"
+                                                       th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                                       placeholder="Name"/>
+
+                                                <!-- showing error message -->
+                                                <div class="invalid-feedback" th:each="e:${#fields.errors('name')}"
+                                                     th:text="${e}"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- nickname field -->
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <input type="text" name="nickName" th:value="${contact.nickName}"
+                                                       class="form-control" placeholder="Nick name"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Text input for mobile number -->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                        <input type="number" name="phone" th:value="${contact.phone}"
+                                               class="form-control"
+                                               th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+                                               placeholder="Phone"/>
+
+                                        <!-- showing error message -->
+                                        <div class="invalid-feedback" th:each="e:${#fields.errors('phone')}"
+                                             th:text="${e}"></div>
+
+                                    </div>
+
+                                    <!-- email input email field-->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="fa fa-at"></i></span>
+                                        <input type="email" name="email" th:value="${contact.email}"
+                                               class="form-control"
+                                               th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                                               placeholder="Email"/>
+
+                                        <!-- showing error message -->
+                                        <div class="invalid-feedback" th:each="e:${#fields.errors('email')}"
+                                             th:text="${e}"></div>
+
+                                    </div>
+
+                                    <!-- text input for work field-->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+                                        <input type="text" name="work" th:value="${contact.work}"
+                                               class="form-control" placeholder="Work"/>
+                                    </div>
+
+                                    <!-- file input for contact image-->
+                                    <div class="input-group mb-3">
+                                        <input type="file" name="image" class="form-control"/>
+                                    </div>
+
+                                    <!-- Message input description-->
+                                    <div class="form-outline mb-3">
+                                        <textarea name="description" th:text="${contact.description}"
+                                                  class="form-control" rows="4"
+                                                  th:classappend="${#fields.hasErrors() ? 'is-invalid' : ''}"
+                                                  placeholder="Description"></textarea>
+
+                                        <!-- showing error message -->
+                                        <div class="invalid-feedback" th:each="e:${#fields.errors('description')}"
+                                             th:text="${e}"></div>
+
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button type="submit"
+                                            class="btn btn-success btn-block form-control fw-medium text-uppercase">
+                                        Save
+                                    </button>
+
+                                </form>
+                                <!-- end form -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </body>
+</html>

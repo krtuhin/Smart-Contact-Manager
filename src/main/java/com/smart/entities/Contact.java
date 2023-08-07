@@ -1,6 +1,9 @@
 package com.smart.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "c_contact")
@@ -9,17 +12,25 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+
+    @NotBlank(message = "Name cannot be empty..!!")
     private String name;
+
+    @Size(min = 10, max = 10, message = "Phone number cannot be empty & must have 10 digit..!!")
     private String phone;
+
+    @NotBlank(message = "Email cannot be empty..!!")
+    @Email(message = "Invalid email..!!")
     private String email;
     private String work;
     private String nickName;
 
     @Column(length = 1000)
+    @NotBlank(message = "Description cannot be empty..!!")
     private String description;
     private String picture;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public Contact() {

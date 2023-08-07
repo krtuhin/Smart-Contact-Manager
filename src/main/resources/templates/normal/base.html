@@ -20,54 +20,55 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
-    <body>
+    <!--nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-nav fixed-top">
 
-        <!--nav bar-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-nav">
+        <div class="container-fluid">
 
-            <div class="container-fluid">
+            <!--app title-->
+            <a class="navbar-brand fw-bold fst-italic fs-4" th:href="@{/}">Smart Contact Manager</a>
 
-                <!--app title-->
-                <a class="navbar-brand fw-bold fst-italic fs-4" th:href="@{/}">Smart Contact Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase fw-medium">
 
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase fw-medium">
+                    <!--home button-->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                    </li>
 
-                        <!--home button-->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
-                        </li>
+                    <!--about button-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">about</a>
+                    </li>
 
-                        <!--about button-->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">about</a>
-                        </li>
+                    <!--login button-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span th:text="${user.name}"></span></a>
+                    </li>
 
-                        <!--login button-->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><span th:text="${user.name}"></span></a>
-                        </li>
+                    <!--logout button-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">logout</a>
+                    </li>
 
-                        <!--logout button-->
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}">logout</a>
-                        </li>
-
-                    </ul>
-
-                </div>
+                </ul>
 
             </div>
 
-        </nav>
-        <!--end navbar-->
+        </div>
+
+    </nav>
+    <!--end navbar-->
+
+    <!-- start body -->
+    <body class="user-body">
 
         <!-- start sidebar  -->
         <div class="sidebar">
@@ -76,13 +77,14 @@
             <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
 
             <!-- menu items -->
-            <a href="#" class="item"><span class="fa fa-home"></span> Home</a>
+            <a th:href="@{/user/index}" class="item"><span class="fa fa-home"></span> Home</a>
 
             <a href="#" class="item"><span class="fa fa-address-book"></span> View Contacts</a>
 
-            <a href="#" class="item"><span class="fa fa-edit"></span> Add Contact</a>
+            <a th:href="@{/user/add}" class="item"><span class="fa fa-edit"></span> Add Contact</a>
 
-            <a href="#" class="item"><span class="	fa fa-user-circle-o"></span> Your Profile</a>
+            <a th:href="@{/user/profile_page}" class="item"><span class="	fa fa-user-circle-o"></span> Your
+                Profile</a>
 
             <a href="#" class="item"><span class="fa fa-gear"></span> Settings</a>
 
