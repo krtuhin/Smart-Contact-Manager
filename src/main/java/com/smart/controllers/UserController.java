@@ -5,6 +5,8 @@ import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
 import com.smart.helper.FileUploadHelper;
+import com.smart.helper.Message;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,13 +70,14 @@ public class UserController {
                              @ModelAttribute("contact") Contact contact,
                              BindingResult bindingResult,
                              @RequestParam("image") MultipartFile file,
-                             Model model, Principal principal) {
+                             Model model, Principal principal, HttpSession session) {
 
         try {
             //checking field errors
             if (bindingResult.hasErrors()) {
                 System.out.println(bindingResult);
-                throw new Exception("Error occurred in contact fields, Fill contact data carefully..!");
+
+                return "normal/add_contact";
             }
 
             //saving file into server
@@ -121,14 +124,27 @@ public class UserController {
             //sending data from controller to view
             model.addAttribute("contact", contact);
 
+            //session attribute
+            session.setAttribute("msg", new Message("Contact added successfully..!!", "alert-success"));
+
         } catch (Exception e) {
 
             e.printStackTrace();
 
+            String content = "Something went wrong..!!";
+
+            if (e.toString().contains("Only image")) {
+
+                content = "Only image file can be uploaded..!!";
+            }
+
+            //session attribute
+            session.setAttribute("msg", new Message(content, "alert-danger"));
+
             return "normal/add_contact";
         }
 
-        return "";
+        return "normal/add_contact";
     }
 
 }

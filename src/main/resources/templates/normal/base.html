@@ -101,6 +101,25 @@
             <!-- 3 bar button -->
             <i onclick="toggleSidebar()" class="fa fa-bars m-3 barBtn"></i>
 
+            <!-- error or success message -->
+            <div class="col-md-6 offset-md-3 mt-4">
+
+                <!-- message type -->
+                <div th:if="${session.msg}" th:classappend="${session.msg.type}"
+                     class="alert alert-dismissible fade show" role="alert">
+
+                    <!-- message content -->
+                    <strong th:if="${session.msg}" th:text="${session.msg.content}"></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                    <!-- remove message attribute from session -->
+                    <th:block th:text="${@sessionHelper.removeAttribute('msg')}"></th:block>
+
+                </div>
+
+            </div>
+            <!-- end show message -->
+
             <!--replace other page's data-->
             <div th:replace="${content}"></div>
 
