@@ -4,6 +4,7 @@ import com.smart.dao.ContactRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
+import com.smart.helper.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     //handler for open add contact form
-    @GetMapping("/add")
+    @GetMapping("/add-contact")
     public String openAddContactForm(Model model) {
 
         //sending data to view
@@ -62,11 +63,12 @@ public class UserController {
     }
 
     //handler method for save contact into database
-    @PostMapping("/add-contact")
+    @PostMapping("/save-contact")
     public String addContact(@Valid
                              @ModelAttribute("contact") Contact contact,
                              BindingResult bindingResult,
-                             @RequestParam("image") MultipartFile file, Model model) {
+                             @RequestParam("image") MultipartFile file,
+                             Model model, Principal principal) {
 
         try {
             //checking field errors
@@ -75,15 +77,49 @@ public class UserController {
                 throw new Exception("Error occurred in contact fields, Fill contact data carefully..!");
             }
 
-            //set data into contact object
-            contact.setPicture(file.getOriginalFilename());
+            //saving file into server
+            if (file.isEmpty()) {
+
+                //set data into contact object
+                contact.setPicture("default.png");
+
+            } else if (!file.getContentType().trim().contains("image")) {
+
+                throw new Exception("Only image file can be uploaded..!!");
+
+            } else {
+
+                contact.setPicture(file.getOriginalFilename());
+
+                boolean f = FileUploadHelper.uploadFile(file);
+
+                if (!f) {
+
+                    throw new Exception("File not uploaded..!!");
+                }
+            }
+
+            //contact saving process
+            //fetching username
+            String userName = principal.getName();
+
+            //fetch user from database
+            User user = this.userRepository.getUserByUserName(userName);
+
+            //data add bidirectional mapping way
+            contact.setUser(user);
+            user.getContacts().add(contact);
+
+            //save user into database after modify data
+            User result = this.userRepository.save(user);
+            System.out.println(result);
 
             //saving contact into database
-            Contact result = this.contactRepository.save(contact);
-            System.out.println(contact);
+            //Contact result = this.contactRepository.save(contact);
+            //System.out.println(contact);
 
             //sending data from controller to view
-            model.addAttribute("contact", result);
+            model.addAttribute("contact", contact);
 
         } catch (Exception e) {
 

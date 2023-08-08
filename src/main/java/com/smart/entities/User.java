@@ -136,7 +136,6 @@ public class User {
                 ", profile='" + profile + '\'' +
                 ", type='" + type + '\'' +
                 ", isActive=" + isActive +
-                ", contacts=" + contacts +
                 '}';
     }
 }

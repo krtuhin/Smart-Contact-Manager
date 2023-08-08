@@ -30,7 +30,7 @@ public class Contact {
     private String description;
     private String picture;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     public Contact() {
