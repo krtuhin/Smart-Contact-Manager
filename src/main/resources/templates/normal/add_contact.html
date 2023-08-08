@@ -94,7 +94,7 @@
                                         <textarea name="description" th:text="${contact.description}"
                                                   class="form-control" rows="4"
                                                   th:classappend="${#fields.hasErrors() ? 'is-invalid' : ''}"
-                                                  placeholder="Description"></textarea>
+                                                  placeholder="Description" id="mytextarea"></textarea>
 
                                         <!-- showing error message -->
                                         <div class="invalid-feedback" th:each="e:${#fields.errors('description')}"
@@ -116,6 +116,16 @@
                     </div>
                 </div>
             </div>
+
+            <!-- TinyMCE script -->
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+            <!-- TinyMCE code -->
+            <script>
+                tinymce.init({
+                    selector: '#mytextarea'
+                });
+            </script>
 
         </section>
 
