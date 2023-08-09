@@ -8,6 +8,9 @@ import com.smart.helper.FileUploadHelper;
 import com.smart.helper.Message;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -149,8 +152,10 @@ public class UserController {
     }
 
     //handler for show contacts page
-    @GetMapping("/view-contacts")
-    public String showContacts(Model model, Principal principal) {
+    //getting data as page
+    @GetMapping("/view-contacts/{page}")
+    public String showContacts(@PathVariable("page") Integer page,
+                               Model model, Principal principal) {
 
         try {
 
@@ -158,14 +163,23 @@ public class UserController {
             String userName = principal.getName();
             User user = this.userRepository.getUserByUserName(userName);
 
-            //fetch all contacts from database using userid
-            List<Contact> list = this.contactRepository.findContactsByUserId(user.getId());
+            //create Pageable object
+            // page - current page number
+            // 5 - datalist per page
+            Pageable pageable = PageRequest.of(page, 5);
+
+            //fetch contacts of one page from database using userid
+            Page<Contact> list = this.contactRepository.findContactsByUserId(user.getId(), pageable);
 
             System.out.println(list);
 
             //sending data to view
             model.addAttribute("title", "View Contacts - Smart Contact Manager");
             model.addAttribute("contacts", list);
+
+            //sending page information to view
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", list.getTotalPages());
 
         } catch (Exception e) {
 

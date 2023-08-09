@@ -9,7 +9,7 @@
 
         <section>
 
-            <div class="container mt-5">
+            <div class="container mt-2">
                 <div class="card">
 
                     <!-- heading -->
@@ -45,15 +45,46 @@
 
                                     <!-- action buttons -->
                                     <td>
-                                        <button class="btn fs-4"><span class="fa fa-eye text-primary"></span></button>
-                                        <button class="btn fs-4"><span class="fa fa-edit text-success"></span></button>
-                                        <button class="btn fs-4"><span class="fa fa-trash text-danger"></span></button>
+                                        <button class="btn fs-5"><span class="fa fa-eye text-primary"></span></button>
+                                        <button class="btn fs-5"><span class="fa fa-edit text-success"></span></button>
+                                        <button class="btn fs-5"><span class="fa fa-trash text-danger"></span></button>
                                     </td>
 
                                 </tr>
                             </tbody>
 
                         </table>
+
+                        <!-- pagination -->
+                        <nav aria-label="Page navigation example">
+
+                            <ul class="pagination justify-content-center">
+
+                                <!-- previous page link -->
+                                <li th:if="${currentPage != 0}" class="page-item">
+                                    <a class="page-link"
+                                       th:href="@{'/user/view-contacts/'+ ${currentPage-1}}">Previous</a>
+                                </li>
+
+                                <!-- loop from 1 to total number of page -->
+                                <li th:each="i:${#numbers.sequence(1,totalPages)}"
+                                    th:classappend="${currentPage==i-1?'active':''}" class="page-item">
+
+                                    <!-- link for changing page -->
+                                    <a th:text="${i}" class="page-link"
+                                       th:href="@{'/user/view-contacts/'+ ${i-1}}"></a>
+
+                                </li>
+
+                                <!-- next page link -->
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item">
+                                    <a class="page-link" th:href="@{'/user/view-contacts/'+ ${currentPage+1}}">Next</a>
+                                </li>
+
+                            </ul>
+
+                        </nav>
+                        <!-- end pagination -->
 
                     </div>
                     <!-- end body -->
