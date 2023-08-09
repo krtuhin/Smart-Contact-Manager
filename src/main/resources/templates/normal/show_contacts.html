@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section})}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Show Contacts</title>
+    </head>
+
+    <body>
+
+        <section>
+
+            <div class="container mt-5">
+                <div class="card">
+
+                    <!-- heading -->
+                    <div class="card-header text-center">
+                        <h3>Your Contacts</h3>
+                    </div>
+
+                    <!-- body -->
+                    <div class="card-body">
+
+                        <table class="table text-center">
+
+                            <!-- column name -->
+                            <thead>
+                                <tr class="text-uppercase">
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+
+                            <!-- contact data -->
+                            <tbody>
+                                <tr th:each="c: ${contacts}">
+
+                                    <!-- data -->
+                                    <th scope="row" th:text="'SCMTK23'+${c.id}"></th>
+                                    <td th:text="${c.name}"></td>
+                                    <td th:text="${c.phone}"></td>
+                                    <td th:text="${c.email}"></td>
+
+                                    <!-- action buttons -->
+                                    <td>
+                                        <button class="btn fs-4"><span class="fa fa-eye text-primary"></span></button>
+                                        <button class="btn fs-4"><span class="fa fa-edit text-success"></span></button>
+                                        <button class="btn fs-4"><span class="fa fa-trash text-danger"></span></button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <!-- end body -->
+
+                </div>
+            </div>
+
+        </section>
+
+    </body>
+</html>

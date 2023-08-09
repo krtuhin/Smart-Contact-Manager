@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -144,7 +145,34 @@ public class UserController {
             return "normal/add_contact";
         }
 
-        return "normal/add_contact";
+        return "normal/show_contacts";
+    }
+
+    //handler for show contacts page
+    @GetMapping("/view-contacts")
+    public String showContacts(Model model, Principal principal) {
+
+        try {
+
+            //fetch current user from database using userName
+            String userName = principal.getName();
+            User user = this.userRepository.getUserByUserName(userName);
+
+            //fetch all contacts from database using userid
+            List<Contact> list = this.contactRepository.findContactsByUserId(user.getId());
+
+            System.out.println(list);
+
+            //sending data to view
+            model.addAttribute("title", "View Contacts - Smart Contact Manager");
+            model.addAttribute("contacts", list);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return "normal/show_contacts";
     }
 
 }
