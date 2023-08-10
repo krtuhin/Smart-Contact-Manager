@@ -39,7 +39,15 @@
 
                                     <!-- data -->
                                     <th scope="row" th:text="'SCMTK23'+${c.id}"></th>
-                                    <td th:text="${c.name}"></td>
+
+                                    <!-- image and name -->
+                                    <td>
+                                        <img th:src="@{'/img/contacts/' + ${c.picture}}"
+                                             alt="profile image" class="contact-img">
+
+                                        <span th:text="${c.name}"></span>
+                                    </td>
+
                                     <td th:text="${c.phone}"></td>
                                     <td th:text="${c.email}"></td>
 
