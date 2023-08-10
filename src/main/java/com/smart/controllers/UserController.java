@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -187,6 +188,21 @@ public class UserController {
 
         }
         return "normal/show_contacts";
+    }
+
+    //handler for contact details page
+    @GetMapping("/contact/{id}")
+    public String contactDetails(@PathVariable("id") int cId, Model model) {
+
+        //fetching single contact from database
+        Optional<Contact> contactList = this.contactRepository.findById(cId);
+        Contact contact = contactList.get();
+
+        //sending data to view
+        model.addAttribute("title", "Contact Details - Smart Contact Manager");
+        model.addAttribute("contact", contact);
+
+        return "normal/contact_details";
     }
 
 }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base::layout(~{::section})}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Contact Details</title>
+    </head>
+
+    <body>
+
+        <section>
+
+            <!-- contact card -->
+            <div class="card mx-5">
+
+                <!-- card body -->
+                <div class="card-body text-center">
+
+                    <!-- contact image -->
+                    <img th:src="@{'/img/contacts/'+${contact.picture}}" alt="contact image" class="cnt-dtl-img">
+
+                    <!-- contact name and nickName -->
+                    <h3 class="my-1">
+                        <span th:text="${contact.name}"></span> (<span th:text="${contact.nickName}"></span>)
+                    </h3>
+
+                    <!-- details list -->
+                    <div class="card-body mx-5 my-3 cnt-dtl">
+                        <table class="table">
+                            <tbody>
+
+                                <!-- contact id -->
+                                <tr>
+                                    <th scope="row">#ID :</th>
+                                    <td th:text="'SCMTK23'+${contact.id}"></td>
+                                </tr>
+
+                                <!-- phone number -->
+                                <tr>
+                                    <th scope="row">Phone :</th>
+                                    <td th:text="${contact.phone}"></td>
+                                </tr>
+
+                                <!-- email -->
+                                <tr>
+                                    <th scope="row">Email :</th>
+                                    <td th:text="${contact.email}"></td>
+                                </tr>
+
+                                <!-- work details -->
+                                <tr>
+                                    <th scope="row">Work :</th>
+                                    <td th:text="${contact.work}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <!-- contact description -->
+                        <div class="description">
+                            <th:block th:utext="${contact.description}"></th:block>
+                        </div>
+
+                    </div>
+                    <!-- end details list -->
+
+                    <!-- update and delete button -->
+                    <div class="container text-uppercase">
+
+                        <a href="#" class="btn btn-success fw-medium">update</a>
+                        <a href="#" class="btn btn-danger fw-medium">delete</a>
+
+                    </div>
+
+                </div>
+                <!-- end card body -->
+
+            </div>
+            <!-- end contact card -->
+
+        </section>
+
+    </body>
+</html>

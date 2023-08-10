@@ -102,3 +102,16 @@ body {
     object-fit: cover;
     border-radius: 50%;
 }
+
+.cnt-dtl-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.cnt-dtl {
+    border: 2px solid darkgrey;
+    border-radius: 1rem;
+    margin: 0px 190px;
+}
