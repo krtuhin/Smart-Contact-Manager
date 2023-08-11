@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -149,7 +150,7 @@ public class UserController {
             return "normal/add_contact";
         }
 
-        return "normal/show_contacts";
+        return this.showContacts(0, model, principal);
     }
 
     //handler for show contacts page
@@ -192,11 +193,21 @@ public class UserController {
 
     //handler for contact details page
     @GetMapping("/contact/{id}")
-    public String contactDetails(@PathVariable("id") int cId, Model model) {
+    public String contactDetails(@PathVariable("id") int cId,
+                                 Model model, Principal principal) {
 
         //fetching single contact from database
         Optional<Contact> contactList = this.contactRepository.findById(cId);
         Contact contact = contactList.get();
+
+        //getting current userName
+        String userName = principal.getName();
+
+        //checking the particular contact is this user's or not
+        if (!contact.getUser().getEmail().equals(userName)) {
+
+            return this.showContacts(0, model, principal);
+        }
 
         //sending data to view
         model.addAttribute("title", "Contact Details - Smart Contact Manager");
