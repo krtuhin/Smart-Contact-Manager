@@ -150,7 +150,7 @@ public class UserController {
             return "normal/add_contact";
         }
 
-        return this.showContacts(0, model, principal);
+        return "redirect:/user/view-contacts/0";
     }
 
     //handler for show contacts page
@@ -206,7 +206,7 @@ public class UserController {
         //checking the particular contact is this user's or not
         if (!contact.getUser().getEmail().equals(userName)) {
 
-            return this.showContacts(0, model, principal);
+            return "redirect:/user/view-contacts/0";
         }
 
         //sending data to view
@@ -214,6 +214,56 @@ public class UserController {
         model.addAttribute("contact", contact);
 
         return "normal/contact_details";
+    }
+
+    //handler for delete single contact
+    @GetMapping("/delete-contact/{id}")
+    public String deleteContact(@PathVariable("id") int cId, Model model,
+                                Principal principal, HttpSession httpSession) {
+
+        //message object
+        Message message = new Message();
+
+        try {
+
+            //fetching user from database by email
+            String userName = principal.getName();
+            User user = this.userRepository.getUserByUserName(userName);
+
+            //getting single contact from database using contact id
+            Optional<Contact> optionalContact = this.contactRepository.findById(cId);
+            Contact contact = optionalContact.get();
+
+            //checking owner of contact
+            if (user.getId() == contact.getUser().getId()) {
+
+                //delete contact
+                this.contactRepository.deleteById(cId);
+
+                //setting value of success message
+                message.setContent("Deleted Successfully...!!");
+                message.setType("alert-success");
+
+                //sending success message
+                httpSession.setAttribute("msg", message);
+
+            } else {
+
+                //throwing exception for not matching user
+                throw new Exception("You do not have any contact with this id..!!");
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            //setting value of error message
+            message.setContent("Permission Denied...!!");
+            message.setType("alert-danger");
+
+            //sending error message
+            httpSession.setAttribute("msg", message);
+        }
+        return "redirect:/user/view-contacts/0";
     }
 
 }

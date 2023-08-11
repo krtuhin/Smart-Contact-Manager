@@ -68,7 +68,8 @@
                     <div class="container text-uppercase">
 
                         <a href="#" class="btn btn-success fw-medium">update</a>
-                        <a href="#" class="btn btn-danger fw-medium">delete</a>
+                        <a th:href="@{'/user/delete-contact/'+${contact.id}}"
+                           class="btn btn-danger fw-medium">delete</a>
 
                     </div>
 
