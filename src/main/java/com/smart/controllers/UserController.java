@@ -266,4 +266,131 @@ public class UserController {
         return "redirect:/user/view-contacts/0";
     }
 
+    //handler for open update contact form
+    @GetMapping("/update-contact/{id}")
+    public String updateContact(@PathVariable("id") int cId,
+                                Model model, Principal principal) {
+
+        try {
+
+            //fetching user from database
+            User user = this.userRepository.getUserByUserName(principal.getName());
+
+            //fetching contact from database by id
+            Contact contact = this.contactRepository.findById(cId).get();
+
+            if (user.getId() == contact.getUser().getId()) {
+
+                model.addAttribute("contact", contact);
+
+            } else {
+                throw new Exception("You do not have any contact with this id..!!");
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return "redirect:/user/view-contacts/0";
+        }
+        //sending data to view
+        model.addAttribute("title", "Update Contact - Smart Contact Manager");
+
+        return "normal/update_contact";
+    }
+
+    //handler for update contact
+    @PostMapping("/update")
+    public String update(@Valid @ModelAttribute("contact") Contact contact,
+                         BindingResult bindingResult,
+                         @RequestParam("image") MultipartFile file,
+                         Principal principal, HttpSession session) {
+
+        //success or error message object
+        Message message = new Message();
+
+        try {
+            //if any error occurred in input fields
+            if (bindingResult.hasErrors()) {
+
+                throw new Exception("Mandatory fields cannot be empty..!!");
+            }
+
+            //fetch username
+            String userName = principal.getName();
+
+            //fetching user from database by email
+            User user = this.userRepository.getUserByUserName(userName);
+
+            //old contact details
+            Contact oldContact = this.contactRepository.findById(contact.getId()).get();
+
+            //set user of contact
+            contact.setUser(user);
+
+            //image file validation
+            if (file.isEmpty()) {
+
+                //if image empty
+                contact.setPicture(oldContact.getPicture());
+
+            } else if (!file.getContentType().contains("image")) {
+
+                //if input file is not an image
+                throw new Exception("Only image can be uploaded..!");
+
+            } else {
+
+                //delete old image from server
+                FileUploadHelper.deleteFile(oldContact.getPicture());
+
+                //saving image into server after validate
+                boolean isSave = FileUploadHelper.uploadFile(file);
+
+                //update contact image name in database
+                contact.setPicture(file.getOriginalFilename());
+
+                //if image save failed
+                if (!isSave) {
+                    throw new Exception("File not uploaded..!!");
+                }
+            }
+
+            //saving contact into database
+            Contact result = this.contactRepository.save(contact);
+
+            //sending success message
+            message.setContent("Contact updated successfully..!!");
+            message.setType("alert-success");
+            session.setAttribute("msg", message);
+
+            return "redirect:/user/view-contacts/0";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            //error message content
+            String content = "Something went wrong, try again..!!";
+
+            //error message based on condition
+            if (e.toString().contains("image")) {
+
+                content = "Select valid image..!!";
+
+            } else if (e.toString().contains("fields")) {
+
+                content = "Mandatory fields cannot be empty..!!";
+            }
+
+            //sending error message
+            message.setType("alert-danger");
+            message.setContent(content);
+            session.setAttribute("msg", message);
+
+            return "redirect:/user/update-contact/" + contact.getId();
+        }
+    }
+
 }

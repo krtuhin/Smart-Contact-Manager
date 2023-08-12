@@ -67,7 +67,9 @@
                     <!-- update and delete button -->
                     <div class="container text-uppercase">
 
-                        <a href="#" class="btn btn-success fw-medium">update</a>
+                        <a th:href="@{'/user/update-contact/'+${contact.id}}"
+                           class="btn btn-success fw-medium">update</a>
+
                         <a th:href="@{'/user/delete-contact/'+${contact.id}}"
                            class="btn btn-danger fw-medium">delete</a>
 

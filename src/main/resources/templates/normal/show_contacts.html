@@ -58,7 +58,9 @@
                                             <span class="fa fa-eye text-primary"></span>
                                         </a>
 
-                                        <button class="btn fs-5"><span class="fa fa-edit text-success"></span></button>
+                                        <!-- update contact button -->
+                                        <a th:href="@{'/user/update-contact/'+${c.id}}" class="btn fs-5">
+                                            <span class="fa fa-edit text-success"></span></a>
 
                                         <!-- delete button -->
                                         <a th:href="@{'/user/delete-contact/'+${c.id}}" class="btn fs-5">
