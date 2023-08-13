@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base::layout(~{::section})}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Profile Page</title>
+    </head>
+    <body>
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+
+                        <!-- user details card -->
+                        <div class="card">
+                            <div class="card-body text-center">
+
+                                <!-- profile image -->
+                                <img th:src="@{'/img/users/'+${user.profile}}" alt="Profile Picture"
+                                     class="cnt-dtl-img">
+
+                                <!-- username -->
+                                <h4><span th:text="${user.name}"></span></h4>
+
+                                <!--user details card -->
+                                <div class="card-body">
+
+                                    <table class="table">
+                                        <tbody>
+
+                                            <!-- userid -->
+                                            <tr>
+                                                <th scope="row">USERID</th>
+                                                <td><span th:text="${user.id}"></span></td>
+                                            </tr>
+
+                                            <!-- name -->
+                                            <tr>
+                                                <th scope="row">NAME</th>
+                                                <td><span th:text="${user.name}"></span></td>
+                                            </tr>
+
+                                            <!-- email -->
+                                            <tr>
+                                                <th scope="row">EMAIL</th>
+                                                <td><span th:text="${user.email}"></span>r</td>
+                                            </tr>
+
+                                            <!-- about -->
+                                            <tr>
+                                                <th scope="row">ABOUT</th>
+                                                <td><span th:text="${user.about}"></span>r</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- end details card -->
+
+                                <!-- action buttons -->
+                                <div class="container text-center">
+
+                                    <!-- update button -->
+                                    <button type="submit" class="btn btn-primary fw-medium text-uppercase">
+                                        Update profile
+                                    </button>
+
+                                    <!-- delete button -->
+                                    <button type="submit" class="btn btn-danger fw-medium text-uppercase">
+                                        Delete account
+                                    </button>
+
+                                </div>
+                                <!-- end buttons -->
+
+                            </div>
+                        </div>
+                        <!-- end main card -->
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </body>
+</html>

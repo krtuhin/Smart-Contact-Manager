@@ -393,4 +393,13 @@ public class UserController {
         }
     }
 
+    //handler to show user profile page
+    @GetMapping("/profile")
+    public String userProfile(Model model) {
+
+        model.addAttribute("title", "Your Profile - Smart Contact Manager");
+
+        return "normal/user_profile";
+    }
+
 }

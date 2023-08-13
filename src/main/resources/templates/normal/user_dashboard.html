@@ -8,12 +8,35 @@
     <body>
 
         <section>
-            <h1>Welcome you are normal user...!!</h1>
-            <h2>This is your private dashboard..!</h2>
 
-            <h2 th:text="'Welcome back' + ${user.name}"></h2>
-            <h3 th:text="'Your email is : ' + ${user.email}"></h3>
-            <h3 th:text="'Your password is : ' + ${user.password}"></h3>
+            <div class="container mt-5 pt-3">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+
+                        <!-- card -->
+                        <div class="card">
+                            <div class="card-body text-center">
+
+                                <!-- logo -->
+                                <img th:src="@{/img/logo.jpg}" alt="logo" class="logo">
+
+                                <!-- text -->
+                                <h3 class="fw-light fst-italic text-secondary mt-2">Start adding your contact into
+                                    cloud...</h3>
+
+                                <!-- add contact button -->
+                                <a th:href="@{/user/add-contact}"
+                                   class="btn btn-warning text-uppercase btn-block text-white fw-medium my-2">
+                                    Add new contact</a>
+
+                            </div>
+                        </div>
+                        <!-- end card -->
+
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     </body>
