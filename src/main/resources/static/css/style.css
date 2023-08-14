@@ -122,3 +122,18 @@ body {
     object-fit: cover;
     border-radius: 50%;
 }
+
+/*search box*/
+.search-container {
+    position: relative;
+}
+
+.search-result {
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 1rem;
+    width: 100%;
+    display: none;
+}
