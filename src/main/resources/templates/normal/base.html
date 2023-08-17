@@ -15,6 +15,9 @@
               integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
               crossorigin="anonymous">
 
+        <!-- jQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
         <!-- awesome icon -->
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -77,17 +80,19 @@
             <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
 
             <!-- menu items -->
-            <a th:href="@{/user/index}" class="item"><span class="fa fa-home"></span> Home</a>
+            <a th:href="@{/user/index}" id="home-link" class="item">
+                <span class="fa fa-home"></span>Home</a>
 
-            <a th:href="@{/user/view-contacts/0}" class="item">
+            <a th:href="@{/user/view-contacts/0}" id="view-link" class="item">
                 <span class="fa fa-address-book"></span> View Contacts</a>
 
-            <a th:href="@{/user/add-contact}" class="item"><span class="fa fa-edit"></span> Add Contact</a>
+            <a th:href="@{/user/add-contact}" id="add-link" class="item">
+                <span class="fa fa-edit"></span> Add Contact</a>
 
-            <a th:href="@{/user/profile}" class="item"><span class="	fa fa-user-circle-o"></span> Your
-                Profile</a>
+            <a th:href="@{/user/profile}" id="profile-link" class="item">
+                <span class="	fa fa-user-circle-o"></span> Your Profile</a>
 
-            <a href="#" class="item"><span class="fa fa-gear"></span> Settings</a>
+            <a href="#" id="setting-link" class="item"><span class="fa fa-gear"></span> Settings</a>
 
             <a th:href="@{/logout}" class="item"><span class="fa fa-sign-out"></span> Logout</a>
 
@@ -132,7 +137,5 @@
                 integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
                 crossorigin="anonymous"></script>
 
-        <!-- jQuery -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </body>
 </html>

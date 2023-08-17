@@ -125,6 +125,12 @@
                 tinymce.init({
                     selector: '#mytextarea'
                 });
+
+                // current page active link
+                $(document).ready(() => {
+                    $(".item").removeClass("active-link");
+                    $("#add-link").addClass("active-link");
+                });
             </script>
 
         </section>

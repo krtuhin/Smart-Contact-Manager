@@ -137,3 +137,8 @@ body {
     width: 100%;
     display: none;
 }
+
+.active-link {
+    background-color: aquamarine;
+    color: white !important;
+}

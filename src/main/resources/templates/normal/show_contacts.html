@@ -32,58 +32,65 @@
                     <!-- body -->
                     <div class="card-body">
 
-                        <table class="table text-center">
+                        <div class="table-responsive">
 
-                            <!-- column name -->
-                            <thead>
-                                <tr class="text-uppercase">
-                                    <th scope="col">#ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
+                            <table class="table text-center table-hover table-bordered">
 
-                            <!-- contact data -->
-                            <tbody>
-                                <tr th:each="c: ${contacts}">
+                                <!-- column name -->
+                                <thead class="table-light">
 
-                                    <!-- data -->
-                                    <th scope="row" th:text="'SCMTK23'+${c.id}"></th>
+                                    <tr class="text-uppercase">
+                                        <th scope="col">#ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
 
-                                    <!-- image and name -->
-                                    <td>
-                                        <img th:src="@{'/img/contacts/' + ${c.picture}}"
-                                             alt="profile image" class="contact-img">
+                                </thead>
 
-                                        <span th:text="${c.name}"></span>
-                                    </td>
+                                <!-- contact data -->
+                                <tbody>
+                                    <tr th:each="c: ${contacts}">
 
-                                    <td th:text="${c.phone}"></td>
-                                    <td th:text="${c.email}"></td>
+                                        <!-- data -->
+                                        <th scope="row" th:text="'SCMTK23'+${c.id}"></th>
 
-                                    <!-- action buttons -->
-                                    <td>
-                                        <!-- contact details button -->
-                                        <a th:href="@{'/user/contact/' + ${c.id}}" class="btn fs-5">
-                                            <span class="fa fa-eye text-primary"></span>
-                                        </a>
+                                        <!-- image and name -->
+                                        <td>
+                                            <img th:src="@{'/img/contacts/' + ${c.picture}}"
+                                                 alt="profile image" class="contact-img">
 
-                                        <!-- update contact button -->
-                                        <a th:href="@{'/user/update-contact/'+${c.id}}" class="btn fs-5">
-                                            <span class="fa fa-edit text-success"></span></a>
+                                            <span th:text="${c.name}"></span>
+                                        </td>
 
-                                        <!-- delete button -->
-                                        <a th:href="@{'/user/delete-contact/'+${c.id}}" class="btn fs-5">
-                                            <span class="fa fa-trash text-danger"></span>
-                                        </a>
-                                    </td>
+                                        <td th:text="${c.phone}"></td>
+                                        <td th:text="${c.email}"></td>
 
-                                </tr>
-                            </tbody>
+                                        <!-- action buttons -->
+                                        <td>
+                                            <!-- contact details button -->
+                                            <a th:href="@{'/user/contact/' + ${c.id}}" class="btn fs-5">
+                                                <span class="fa fa-eye text-primary"></span>
+                                            </a>
 
-                        </table>
+                                            <!-- update contact button -->
+                                            <a th:href="@{'/user/update-contact/'+${c.id}}" class="btn fs-5">
+                                                <span class="fa fa-edit text-success"></span></a>
+
+                                            <!-- delete button -->
+                                            <a th:href="@{'/user/delete-contact/'+${c.id}}" class="btn fs-5">
+                                                <span class="fa fa-trash text-danger"></span>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        <!-- responsive table div -->
 
                         <!-- pagination -->
                         <nav aria-label="Page navigation example">
@@ -121,6 +128,14 @@
 
                 </div>
             </div>
+
+            <!-- active current page link -->
+            <script>
+                $(document).ready(() => {
+                    $(".item").removeClass("active-link");
+                    $("#view-link").addClass("active-link");
+                });
+            </script>
 
         </section>
 

@@ -26,34 +26,38 @@
                                 <!--user details card -->
                                 <div class="card-body">
 
-                                    <table class="table">
-                                        <tbody>
+                                    <div class="table-responsive">
 
-                                            <!-- userid -->
-                                            <tr>
-                                                <th scope="row">USERID</th>
-                                                <td><span th:text="${user.id}"></span></td>
-                                            </tr>
+                                        <table class="table table-bordered">
+                                            <tbody>
 
-                                            <!-- name -->
-                                            <tr>
-                                                <th scope="row">NAME</th>
-                                                <td><span th:text="${user.name}"></span></td>
-                                            </tr>
+                                                <!-- userid -->
+                                                <tr>
+                                                    <th scope="row">USERID</th>
+                                                    <td><span th:text="${user.id}"></span></td>
+                                                </tr>
 
-                                            <!-- email -->
-                                            <tr>
-                                                <th scope="row">EMAIL</th>
-                                                <td><span th:text="${user.email}"></span>r</td>
-                                            </tr>
+                                                <!-- name -->
+                                                <tr>
+                                                    <th scope="row">NAME</th>
+                                                    <td><span th:text="${user.name}"></span></td>
+                                                </tr>
 
-                                            <!-- about -->
-                                            <tr>
-                                                <th scope="row">ABOUT</th>
-                                                <td><span th:text="${user.about}"></span>r</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                <!-- email -->
+                                                <tr>
+                                                    <th scope="row">EMAIL</th>
+                                                    <td><span th:text="${user.email}"></span>r</td>
+                                                </tr>
+
+                                                <!-- about -->
+                                                <tr>
+                                                    <th scope="row">ABOUT</th>
+                                                    <td><span th:text="${user.about}"></span>r</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
 
                                 </div>
                                 <!-- end details card -->
@@ -81,6 +85,14 @@
                     </div>
                 </div>
             </div>
+
+            <!-- active current page -->
+            <script>
+                $(document).ready(() => {
+                    $(".item").removeClass("active-link");
+                    $("#profile-link").addClass("active-link");
+                })
+            </script>
 
         </section>
     </body>
