@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //add common data in all pages
     @ModelAttribute
@@ -400,6 +404,50 @@ public class UserController {
         model.addAttribute("title", "Your Profile - Smart Contact Manager");
 
         return "normal/user_profile";
+    }
+
+    //handler for open settings
+    @GetMapping("/settings")
+    public String openSetting(Model model) {
+
+        //sending data from controller to view
+        model.addAttribute("title", "Settings - Smart Contact Manager");
+
+        return "normal/settings_page";
+    }
+
+    //handler for processing change password form
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 Principal principal, HttpSession session) {
+
+        //fetch current user using username
+        User user = this.userRepository.getUserByUserName(principal.getName());
+
+        //matching old password
+        if (this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+
+            //setting encoded new password into user object
+            user.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+
+            //update new password into database
+            this.userRepository.save(user);
+
+            //sending success message using session
+            session.setAttribute("msg",
+                    new Message("Password changed successfully..!", "alert-success"));
+
+        } else {
+
+            //sending error message using session
+            session.setAttribute("msg",
+                    new Message("Old password wrong..!", "alert-warning"));
+
+            return "redirect:/user/settings";
+        }
+
+        return "redirect:/user/index";
     }
 
 }

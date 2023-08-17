@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base::layout(~{::section})}">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Settings Page</title>
+    </head>
+
+    <body>
+
+        <section>
+
+            <!-- main body -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <!-- heading -->
+                                <h3 class="text-center my-4">Change Password..!</h3>
+
+                                <!-- change password form -->
+                                <form th:action="@{/user/change-password}" method="post">
+
+                                    <!-- old password field -->
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="oldPassword" id="oldPassword"
+                                               class="form-control" placeholder="Enter old password">
+                                    </div>
+
+                                    <!-- new password field -->
+                                    <div class="input-group mb-3">
+                                        <input type="password" name="newPassword" id="newPassword"
+                                               class="form-control" placeholder="Enter new password">
+                                    </div>
+
+                                    <!-- buttons -->
+                                    <div class="text-center">
+
+                                        <!-- reset -->
+                                        <button type="reset"
+                                                class="btn btn-warning text-white text-uppercase fw-medium">reset
+                                        </button>
+
+                                        <!-- submit -->
+                                        <button type="submit"
+                                                class="btn btn-success text-uppercase fw-medium">Change
+                                        </button>
+
+                                    </div>
+
+                                </form>
+                                <!-- end change password form -->
+
+                            </div>
+                        </div>
+                        <!-- end card -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- end main body -->
+
+            <!-- active current page link -->
+            <script>
+                $(document).ready(() => {
+                    $(".item").removeClass("active-link");
+                    $("#setting-link").addClass("active-link");
+                });
+            </script>
+
+        </section>
+
+    </body>
+
+</html>
