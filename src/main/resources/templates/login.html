@@ -33,6 +33,19 @@
                                         You have been logged out successfully..!!
                                     </div>
 
+                                    <!-- reset success message -->
+                                    <div th:if="${session.msg}" th:classappend="${session.msg.type}"
+                                         class="alert alert-dismissible fade show" role="alert">
+
+                                        <strong><span th:text="${session.msg.content}"></span></strong>
+
+                                        <button type="button" class="btn-close"
+                                                data-bs-dismiss="alert" aria-label="Close"></button>
+
+                                        <th:block th:text="${@sessionHelper.removeAttribute('msg')}"></th:block>
+
+                                    </div>
+
                                     <!-- email field -->
                                     <div class="form-outline my-4">
                                         <input type="email" id="email" name="username"
@@ -40,9 +53,19 @@
                                     </div>
 
                                     <!-- password field -->
-                                    <div class="form-outline mb-4">
+                                    <div class="form-outline mb-1">
                                         <input type="password" id="password" name="password"
                                                class="form-control form-control-lg" placeholder="Enter password"/>
+                                    </div>
+
+                                    <!-- forgot password button -->
+                                    <div class="row text-end mb-3 px-2">
+
+                                        <small>
+                                            <a href="/forgot" class="text-primary fw-normal text-decoration-none">
+                                                Forgot password?</a>
+                                        </small>
+
                                     </div>
 
                                     <!-- login button -->
