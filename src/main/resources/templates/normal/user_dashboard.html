@@ -9,7 +9,7 @@
 
         <section>
 
-            <div class="container mt-5 pt-3">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
 
@@ -32,6 +32,28 @@
                             </div>
                         </div>
                         <!-- end card -->
+
+                        <!-- payment form -->
+                        <div class="col-md-6 offset-md-3 my-3">
+                            <div class="card">
+                                <div class="card-body mx-auto">
+
+                                    <!-- amount field -->
+                                    <div class="input-group">
+                                        <input type="number" name="amount" id="amount" class="form-control"
+                                               placeholder="Enter amount here">
+                                    </div>
+
+                                    <!-- payment button -->
+                                    <button onclick="paymentStart()" type="submit"
+                                            class="btn btn-success form-control mt-3 text-uppercase fw-medium">
+                                        Donate Us
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end payment form -->
 
                     </div>
                 </div>

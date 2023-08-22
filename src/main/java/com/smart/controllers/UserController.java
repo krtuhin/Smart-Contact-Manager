@@ -1,16 +1,23 @@
 package com.smart.controllers;
 
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 import com.smart.dao.ContactRepository;
+import com.smart.dao.PaymentRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
+import com.smart.entities.Payments;
 import com.smart.entities.User;
 import com.smart.helper.FileUploadHelper;
 import com.smart.helper.Message;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +29,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +44,9 @@ public class UserController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     //add common data in all pages
     @ModelAttribute
@@ -450,4 +461,70 @@ public class UserController {
         return "redirect:/user/index";
     }
 
+    //handler for creating payment order
+    @PostMapping("/create-order")
+    @ResponseBody
+    public String paymentOrder(@RequestBody Map<String, Object> data, Principal principal) {
+
+        //getting amount
+        int amount = Integer.parseInt(data.get("amount").toString());
+
+        try {
+
+            //RazorPay client object
+            RazorpayClient client = new RazorpayClient("rzp_test_JZAipOiOr7CDus", "LyBNwqYxfkpIsfhv0On57ewd");
+
+            //json object
+            JSONObject json = new JSONObject();
+
+            json.put("amount", amount * 100);
+            json.put("currency", "INR");
+            json.put("receipt", "txn_345");
+
+            //creating order
+            Order order = client.orders.create(json);
+
+            //current user using user email
+            User user = this.userRepository.getUserByUserName(principal.getName());
+
+            //payment object
+            Payments payments = new Payments();
+
+            //setting data into payment object
+            payments.setOrderId(order.get("id"));
+            payments.setAmount(order.get("amount"));
+            payments.setStatus("created");
+            payments.setUser(user);
+            payments.setReceipt(order.get("receipt"));
+
+            //saving payment data into database
+            this.paymentRepository.save(payments);
+
+            return order.toString();
+
+        } catch (RazorpayException e) {
+
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //method for update payment on serer
+    @PostMapping("/update-payment")
+    @ResponseBody
+    public ResponseEntity<?> updatePayment(@RequestBody Map<String, Object> data) {
+
+        //getting payment details from database by order id
+        Payments payments = this.paymentRepository.findByOrderId(data.get("order_id").toString());
+
+        //updating payment status and payment id
+        payments.setStatus(data.get("status").toString());
+        payments.setPaymentId(data.get("payment_id").toString());
+
+        //update into database
+        this.paymentRepository.save(payments);
+
+        return ResponseEntity.ok(Map.of("message", "updated"));
+    }
 }
