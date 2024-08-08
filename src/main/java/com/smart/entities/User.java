@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,8 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password can't be empty..!")
-    //@Size(min = 8, max = 20, message = "Invalid password..! (password must be between 8 to 20 characters)")
+    // @Size(min = 8, max = 20, message = "Invalid password..! (password must be
+    // between 8 to 20 characters)")
     private String password;
 
     @Column(length = 500)
@@ -41,7 +41,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String email, String password, String about, String profile, String type, boolean isActive, List<Contact> contacts) {
+    public User(int id, String name, String email, String password, String about, String profile, String type,
+            boolean isActive, List<Contact> contacts) {
         this.id = id;
         this.name = name;
         this.email = email;

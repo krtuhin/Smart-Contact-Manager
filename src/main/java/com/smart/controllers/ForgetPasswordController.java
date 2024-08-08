@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
 @Controller
@@ -28,10 +27,10 @@ public class ForgetPasswordController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    //for generating otp
+    // for generating otp
     Random random = new Random();
 
-    //handler for forgot password form
+    // handler for forgot password form
     @GetMapping("/forgot")
     public String forgotPasswordPage(Model model) {
 
@@ -40,7 +39,7 @@ public class ForgetPasswordController {
         return "forgot_password_page";
     }
 
-    //handler for open verify otp page
+    // handler for open verify otp page
     @GetMapping("/verify")
     public String openVerifyOtpPage(Model model) {
 
@@ -49,7 +48,7 @@ public class ForgetPasswordController {
         return "verify_otp_page";
     }
 
-    //handler for open reset password form
+    // handler for open reset password form
     @GetMapping("/reset-password")
     public String forgotPasswordForm(Model model) {
 
@@ -58,14 +57,14 @@ public class ForgetPasswordController {
         return "reset_password_form";
     }
 
-    //handler for send otp
+    // handler for send otp
     @PostMapping("/send-otp")
     public String sendOtp(@RequestParam("email") String email, HttpSession session) {
 
-        //fetch user from  database
+        // fetch user from database
         User user = this.userRepository.getUserByUserName(email);
 
-        //check the provided email present in database or not
+        // check the provided email present in database or not
         if (user == null) {
 
             session.setAttribute("msg",
@@ -75,17 +74,17 @@ public class ForgetPasswordController {
         }
 
         int otp = random.nextInt(99999);
-        //String otp1 = new DecimalFormat("00000").format(new Random().nextInt(99999));
+        // String otp1 = new DecimalFormat("00000").format(new Random().nextInt(99999));
         System.out.println(otp);
 
-        //message properties
+        // message properties
         String subject = "Verification Mail";
         String message = "<h2> Your password reset OTP for Smart Contact Manager is : " + otp + "</h2>";
 
-        //send email to user's registered email
+        // send email to user's registered email
         boolean result = this.emailService.sendEmail(email, subject, message);
 
-        //if email cannot be sent
+        // if email cannot be sent
         if (!result) {
 
             session.setAttribute("msg",
@@ -94,7 +93,7 @@ public class ForgetPasswordController {
             return "redirect:/forgot";
         }
 
-        //set otp to session for check later
+        // set otp to session for check later
         session.setAttribute("otp", otp);
         session.setAttribute("user", user);
 
@@ -104,14 +103,14 @@ public class ForgetPasswordController {
         return "redirect:/verify";
     }
 
-    //handler for verify otp
+    // handler for verify otp
     @PostMapping("/verify-otp")
     public String verifyOtp(@RequestParam("otp") int otp, HttpSession session) {
 
-        //get sent otp from session
+        // get sent otp from session
         int sentOtp = (int) session.getAttribute("otp");
 
-        //verify the entered otp and sent otp are same or not
+        // verify the entered otp and sent otp are same or not
         if (sentOtp != otp) {
 
             session.setAttribute("msg", new Message("You have entered wrong OTP..!", "alert-danger"));
@@ -124,16 +123,16 @@ public class ForgetPasswordController {
         return "redirect:/reset-password";
     }
 
-    //handler for reset old password
+    // handler for reset old password
     @PostMapping("/reset")
     public String resetPassword(@RequestParam("password") String password,
-                                @RequestParam("confirmPassword") String confirmPassword,
-                                HttpSession session) {
+            @RequestParam("confirmPassword") String confirmPassword,
+            HttpSession session) {
 
-        //getting user from session
+        // getting user from session
         User user = (User) session.getAttribute("user");
 
-        //matching the password and confirm password
+        // matching the password and confirm password
         if (!password.trim().equalsIgnoreCase(confirmPassword.trim())) {
 
             session.setAttribute("msg", new Message("Password not matched..!", "alert-danger"));
@@ -141,7 +140,7 @@ public class ForgetPasswordController {
             return "redirect:/reset-password";
         }
 
-        //update new password into database
+        // update new password into database
         user.setPassword(this.passwordEncoder.encode(password));
         this.userRepository.save(user);
 
